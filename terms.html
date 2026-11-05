@@ -4,121 +4,109 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nutzungsbedingungen – CryptoStudio</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        slate: {
-                            950: '#090d16',
-                            900: '#0f172a',
-                            800: '#1e293b',
-                            700: '#334155'
-                        }
-                    }
-                }
-            }
-        }
+        tailwind.config = { darkMode: 'class', theme: { extend: {} } }
     </script>
+    <style>
+        :root { --bg:#090909; --bg-panel:#111111; --bg-soft:rgba(255,255,255,0.04); --text:#f5f5f5; --muted:#b9b9b9; --border:rgba(255,255,255,0.12); }
+        body.theme-light { --bg:#f5f3ef; --bg-panel:#ffffff; --bg-soft:rgba(17,17,17,0.03); --text:#111111; --muted:#4d4d4d; --border:rgba(17,17,17,0.08); }
+        body { background: var(--bg); color: var(--text); font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+        *::selection { background: rgba(255,255,255,0.18); color: var(--text); }
+        header, footer, .bg-slate-900\/60, .bg-slate-900\/40, .bg-slate-950, .bg-slate-900, .bg-slate-800 { background: var(--bg-panel) !important; border-color: var(--border) !important; }
+        .text-slate-300, .text-slate-400, .text-slate-500, .text-slate-200 { color: var(--muted) !important; }
+        .text-white, .text-slate-100 { color: var(--text) !important; }
+        .border-slate-800, .border-slate-700 { border-color: var(--border) !important; }
+        .bg-emerald-500\/10, .bg-emerald-600, .bg-emerald-600\/20, .bg-emerald-500 { background: var(--bg-soft) !important; border-color: var(--border) !important; color: var(--text) !important; }
+        .text-emerald-400, .text-emerald-300 { color: var(--text) !important; }
+        .theme-toggle { width:2.4rem; height:2.4rem; display:inline-flex; align-items:center; justify-content:center; border-radius:999px; border:1px solid var(--border); background: var(--bg-soft); color: var(--text); cursor: pointer; }
+        .brand-link { display:inline-flex; align-items:center; gap:0.5rem; padding:0.45rem 0.8rem; border-radius:999px; border:1px solid var(--border); background:var(--bg-soft); color:var(--text); font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; }
+        .brand-mark { display:inline-flex; width:1.7rem; height:1.7rem; border-radius:999px; border:1px solid var(--border); background: var(--bg-soft); align-items:center; justify-content:center; font-size:0.7rem; font-weight:700; }
+    </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-emerald-500 selection:text-slate-950">
-
-    <!-- Header / Navigation -->
-    <header class="border-b border-slate-800/80 bg-slate-900/80 backdrop-blur-md sticky top-0 z-40">
+<body class="min-h-screen flex flex-col antialiased">
+    <header class="border-b border-slate-800/80 sticky top-0 z-40 backdrop-blur-md">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
             <a href="index.html" class="flex items-center space-x-3 group">
-                <img src="assets/logo.jpeg" alt="CryptoStudio" class="h-9 w-auto rounded-lg border border-slate-800">
+                <div class="brand-mark">A</div>
                 <div>
-                    <span class="font-bold text-lg text-white tracking-tight group-hover:text-emerald-400 transition">CryptoStudio</span>
+                    <span class="font-bold text-lg tracking-tight">CryptoStudio</span>
                     <span class="block text-[11px] text-slate-400">Minimalist Cryptography Suite</span>
                 </div>
             </a>
-            <nav class="flex items-center space-x-4 text-xs font-medium text-slate-300">
-                <a href="index.html" class="hover:text-emerald-400 transition">Dashboard</a>
-                <a href="smime.html" class="hover:text-emerald-400 transition">S/MIME</a>
-                <a href="ssh.html" class="hover:text-emerald-400 transition">SSH</a>
-                <a href="pgp.html" class="hover:text-emerald-400 transition">PGP</a>
-                <a href="secrets.html" class="hover:text-emerald-400 transition">Secrets</a>
-                <a href="hashes.html" class="hover:text-emerald-400 transition">Hashes</a>
-            </nav>
+            <div class="flex items-center gap-3">
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">☼</button>
+                <a href="https://github.com/arien-dev" target="_blank" rel="noopener" class="brand-link"><span class="brand-mark">G</span> Made by arien-dev</a>
+            </div>
         </div>
     </header>
 
-    <!-- Main Content -->
     <main class="max-w-3xl mx-auto w-full px-4 sm:px-6 py-10 flex-grow">
         <div class="mb-8">
-            <span class="text-xs font-mono text-emerald-400 uppercase tracking-widest">Rechtliches & Transparenz</span>
-            <h1 class="text-2xl sm:text-3xl font-black text-white mt-1 tracking-tight">Nutzungsbedingungen</h1>
+            <span class="text-xs font-mono uppercase tracking-widest text-slate-300">Rechtliches & Transparenz</span>
+            <h1 class="text-2xl sm:text-3xl font-black mt-1 tracking-tight">Nutzungsbedingungen</h1>
             <p class="text-slate-400 text-sm mt-2">Stand: September 2024</p>
         </div>
 
         <div class="space-y-8 text-sm leading-relaxed text-slate-300">
-            <!-- Section 1 -->
             <section class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 shadow-sm">
                 <h2 class="text-base font-bold text-white mb-3 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span>
+                    <span class="w-2 h-2 rounded-full bg-white inline-block"></span>
                     1. 100% Lokale Datenverarbeitung (Client-Side Only)
                 </h2>
-                <p>
-                    CryptoStudio arbeitet ausschließlich in deinem Webbrowser (Client-Side). Sämtliche Eingaben, Schlüssel, Zertifikate, Passwörter und Hashes werden lokal mit Hilfe von Browser-eigenen Web Crypto APIs und JavaScript-Bibliotheken (<code class="text-emerald-400 font-mono text-xs">node-forge</code>, <code class="text-emerald-400 font-mono text-xs">openpgp.js</code>) generiert.
-                </p>
-                <p class="mt-2 text-slate-400">
-                    Es werden zu keinem Zeitpunkt Daten an Server übermittelt, gespeichert oder protokolliert. Du kannst die Anwendung nach dem ersten Laden auch vollständig offline betreiben.
-                </p>
+                <p>CryptoStudio arbeitet ausschließlich in deinem Webbrowser (Client-Side). Sämtliche Eingaben, Schlüssel, Zertifikate, Passwörter und Hashes werden lokal mit Hilfe von Browser-APIs erzeugt.</p>
+                <p class="mt-2 text-slate-400">Es werden zu keinem Zeitpunkt Daten an Server übermittelt, gespeichert oder protokolliert.</p>
             </section>
 
-            <!-- Section 2 -->
             <section class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 shadow-sm">
                 <h2 class="text-base font-bold text-white mb-3 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span>
+                    <span class="w-2 h-2 rounded-full bg-white inline-block"></span>
                     2. Eigenverantwortung & Aufbewahrung
                 </h2>
-                <p>
-                    Da auf keinem Server Daten gespeichert werden, existiert kein Backup oder Wiederherstellungssystem. Du bist selbst dafür verantwortlich, erstelle Schlüssel, Zertifikate und Passwörter sofort und sicher abzuspeichern. Gehen dir deine Schlüssel oder Passwörter verloren, können diese von niemandem wiederhergestellt werden.
-                </p>
+                <p>Da auf keinem Server Daten gespeichert werden, existiert kein Backup oder Wiederherstellungssystem. Du bist selbst dafür verantwortlich, Schlüssel, Zertifikate und Passwörter sicher aufzubewahren.</p>
             </section>
 
-            <!-- Section 3 -->
             <section class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 shadow-sm">
                 <h2 class="text-base font-bold text-white mb-3 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span>
+                    <span class="w-2 h-2 rounded-full bg-white inline-block"></span>
                     3. Haftungsausschluss (Disclaimer)
                 </h2>
-                <p>
-                    Die Software wird "wie besehen" (AS IS) ohne jegliche ausdrückliche oder stillschweigende Gewährleistung zur Verfügung gestellt. Der Betreiber übernimmt keine Haftung für Schäden, Datenverluste, unbefugten Zugriff oder Fehlfunktionen, die aus der Nutzung der erzeugten Schlüssel oder Zertifikate entstehen.
-                </p>
+                <p>Die Software wird "wie besehen" (AS IS) ohne Gewährleistung zur Verfügung gestellt. Der Betreiber übernimmt keine Haftung für Verluste, Fehler oder Sicherheitsprobleme bei der Nutzung.</p>
             </section>
 
-            <!-- Section 4 -->
             <section class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 shadow-sm">
                 <h2 class="text-base font-bold text-white mb-3 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span>
+                    <span class="w-2 h-2 rounded-full bg-white inline-block"></span>
                     4. Akzeptanz & Nutzung
                 </h2>
-                <p>
-                    Durch die Nutzung der Generatoren auf CryptoStudio und das Aktivieren der Kontrollbox vor der Generierung eines Zertifikats, Schlüssels oder Geheimnisses bestätigst du, diese Nutzungsbedingungen gelesen und verstanden zu haben und diese uneingeschränkt zu akzeptieren.
-                </p>
+                <p>Durch die Nutzung der Generatoren auf CryptoStudio und das Aktivieren der Kontrollbox vor der Generierung bestätigst du, die lokalen Sicherheits- und Datenschutzgrundsätze verstanden zu haben.</p>
             </section>
 
             <div class="pt-4 flex justify-between items-center border-t border-slate-800">
-                <a href="index.html" class="inline-flex items-center space-x-2 text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                <a href="index.html" class="inline-flex items-center space-x-2 text-xs font-semibold text-white hover:opacity-80 transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
                     <span>Zurück zum Dashboard</span>
                 </a>
             </div>
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="border-t border-slate-800/80 bg-slate-900/40 py-6 text-center mt-auto">
+    <footer class="border-t border-slate-800/80 py-6 text-center mt-auto">
         <p class="text-xs text-slate-400">
             © CryptoStudio – Minimalist & Secure Local Crypto Tools.
-            <a href="terms.html" class="text-slate-300 hover:text-emerald-400 ml-2 transition underline">Nutzungsbedingungen</a>
+            <a href="https://github.com/arien-dev" target="_blank" rel="noopener" class="underline hover:text-white ml-2">Made by arien-dev</a>
         </p>
     </footer>
 
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        const applyTheme = (theme) => {
+            document.body.classList.toggle('theme-light', theme === 'light');
+            if (toggle) toggle.textContent = theme === 'dark' ? '☼' : '☾';
+            localStorage.setItem('cryptoTheme', theme);
+        };
+        applyTheme(localStorage.getItem('cryptoTheme') || 'dark');
+        if (toggle) toggle.addEventListener('click', () => applyTheme(document.body.classList.contains('theme-light') ? 'dark' : 'light'));
+    </script>
 </body>
 </html>
