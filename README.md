@@ -32,7 +32,7 @@
 
 Du kannst CryptoStudio direkt online nutzen:
 
-👉 **[CryptoStudio Live-Version auf GitHub Pages öffnen](https://offical-atsch16.github.io/smime-generator/)** *(Link nach dem Deployment anpassen)*
+👉 **[CryptoStudio Live-Version ausprobieren](https://crypto-studio.arien-dev.de)** 
 
 ---
 
@@ -70,6 +70,5 @@ Da CryptoStudio aus einer einzigen Standalone-HTML-Datei besteht, benötigst du 
 
 ## 👤 Author & Support
 
-❤️ **OpenSource & Datenschutz made by** [offical-atsch16](https://github.com/offical-atsch16)
-
+❤️ **OpenSource & Datenschutz made by** [arien-dev](https://github.com/arien-dev)
 Wenn dir das Projekt gefällt, hinterlasse gerne einen ⭐️ **Star** auf GitHub!
