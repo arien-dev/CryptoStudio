@@ -4,210 +4,404 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CryptoStudio – Minimalist Local Cryptography Suite</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
-                extend: {
-                    colors: {
-                        slate: {
-                            950: '#090d16',
-                            900: '#0f172a',
-                            800: '#1e293b',
-                            700: '#334155'
-                        }
-                    }
-                }
+                extend: {}
             }
         }
     </script>
-</head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-emerald-500 selection:text-slate-950">
+    <style>
+        :root {
+            --bg: #090909;
+            --bg-elevated: #111111;
+            --bg-panel: #171717;
+            --bg-soft: rgba(255,255,255,0.04);
+            --text: #f5f5f5;
+            --muted: #b9b9b9;
+            --muted-strong: #d4d4d4;
+            --border: rgba(255,255,255,0.12);
+            --border-strong: rgba(255,255,255,0.18);
+            --shadow: 0 18px 40px rgba(0,0,0,0.28);
+        }
 
-    <!-- Header / Navigation -->
-    <header class="border-b border-slate-800/80 bg-slate-900/80 backdrop-blur-md sticky top-0 z-40">
+        body.theme-light {
+            --bg: #f5f3ef;
+            --bg-elevated: #faf9f7;
+            --bg-panel: #ffffff;
+            --bg-soft: rgba(17,17,17,0.03);
+            --text: #111111;
+            --muted: #4d4d4d;
+            --muted-strong: #2a2a2a;
+            --border: rgba(17,17,17,0.08);
+            --border-strong: rgba(17,17,17,0.12);
+            --shadow: 0 12px 28px rgba(17,17,17,0.08);
+        }
+
+        html, body {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        *::selection {
+            background: rgba(255, 255, 255, 0.18);
+            color: var(--text);
+        }
+
+        header, footer, .bg-slate-900\/60, .bg-slate-900\/40, .bg-slate-950, .bg-slate-900, .bg-slate-800,
+        .shadow-xl, .rounded-2xl, .rounded-xl {
+            background: var(--bg-panel) !important;
+            border-color: var(--border) !important;
+            box-shadow: none !important;
+        }
+
+        .text-slate-100, .text-white, .text-slate-50, .text-slate-200, .text-slate-300, .text-slate-400, .text-slate-500,
+        .text-slate-600, .text-slate-700, .text-slate-800 {
+            color: var(--text) !important;
+        }
+
+        .text-slate-300, .text-slate-400, .text-slate-500 {
+            color: var(--muted) !important;
+        }
+
+        .text-emerald-400, .text-emerald-300, .text-emerald-500, .text-emerald-600 {
+            color: var(--text) !important;
+        }
+
+        .bg-emerald-500\/10, .bg-emerald-600, .bg-emerald-600\/20, .bg-emerald-500 {
+            background: var(--bg-soft) !important;
+            border-color: var(--border) !important;
+            color: var(--text) !important;
+        }
+
+        .border-slate-800, .border-slate-700, .border-slate-800\/80 {
+            border-color: var(--border) !important;
+        }
+
+        .brand-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.45rem 0.8rem;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: var(--bg-soft);
+            color: var(--muted-strong);
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+        }
+
+        .brand-link:hover {
+            border-color: var(--border-strong);
+            color: var(--text);
+        }
+
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.7rem;
+            height: 1.7rem;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.04);
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .minimal-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            padding: 0.5rem 0.8rem;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: var(--bg-soft);
+            color: var(--muted-strong);
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .minimal-dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 999px;
+            background: var(--text);
+            opacity: 0.9;
+        }
+
+        .tool-card {
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.02);
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--border-strong);
+            background: rgba(255,255,255,0.035);
+        }
+
+        .tool-card .icon-shell {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.6rem;
+            height: 2.6rem;
+            border-radius: 0.8rem;
+            background: var(--bg-soft);
+            border: 1px solid var(--border);
+        }
+
+        .theme-toggle {
+            width: 2.4rem;
+            height: 2.4rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: var(--bg-soft);
+            color: var(--text);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--border-strong);
+        }
+
+        .mono-label {
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-size: 0.68rem;
+            color: var(--muted);
+        }
+
+        .mono-card {
+            border: 1px solid var(--border);
+            background: var(--bg-soft);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-white/10">
+
+    <header class="border-b sticky top-0 z-40 backdrop-blur-sm">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
             <a href="index.html" class="flex items-center space-x-3 group">
-                <img src="assets/logo.jpeg" alt="CryptoStudio" class="h-9 w-auto rounded-lg border border-slate-800">
+                <div class="brand-mark">A</div>
                 <div>
-                    <span class="font-bold text-lg text-white tracking-tight group-hover:text-emerald-400 transition">CryptoStudio</span>
+                    <span class="font-bold text-lg tracking-tight">CryptoStudio</span>
                     <span class="block text-[11px] text-slate-400">Minimalist Cryptography Suite</span>
                 </div>
             </a>
-            <div class="flex items-center space-x-3">
-                <div class="inline-flex items-center space-x-2 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-full text-xs text-emerald-400">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span class="hidden sm:inline">100% Lokale Generierung</span>
-                    <span class="sm:hidden">100% Lokal</span>
-                </div>
+            <div class="flex items-center gap-3">
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle light and dark mode">☼</button>
+                <a href="https://github.com/arien-dev" target="_blank" rel="noopener" class="brand-link">
+                    <span class="brand-mark">G</span>
+                    Made by arien-dev
+                </a>
             </div>
         </div>
     </header>
 
-    <!-- Main Dashboard Hub -->
     <main class="max-w-6xl mx-auto w-full px-4 sm:px-6 py-10 flex-grow">
-
-        <!-- Hero Section -->
-        <div class="mb-12 text-center max-w-2xl mx-auto">
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-4">
-                🛡️ Zero Server Storage • Client-Side Only
+        <div class="mb-12 text-center max-w-3xl mx-auto">
+            <span class="minimal-pill mb-5">
+                <span class="minimal-dot"></span>
+                Offline • Zero Server Storage
             </span>
-            <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
-                Kryptographie. Reif & Überlegt.
+            <h1 class="text-3xl sm:text-5xl font-black tracking-[-0.05em] leading-none">
+                Minimal crypto. Built for privacy.
             </h1>
-            <p class="text-slate-400 text-sm sm:text-base mt-3 leading-relaxed">
-                Erstelle S/MIME E-Mail Zertifikate, SSH Keys, PGP Schlüsselpaare, sichere Passwörter und Berechne Hashes direkt in deinem Browser. Keine Server, keine Übertragung.
+            <p class="text-sm sm:text-base mt-4 leading-relaxed text-slate-300">
+                Local-first tools for S/MIME certificates, SSH keys, OpenPGP keys, password generation, and hash checks — all generated in the browser without sending your data anywhere.
             </p>
         </div>
 
-        <!-- Privacy Banner Card -->
-        <div class="mb-10 p-5 bg-slate-900/40 border border-slate-800 rounded-2xl flex items-start space-x-4 text-xs sm:text-sm text-slate-300 backdrop-blur-sm">
-            <div class="p-2 bg-emerald-500/10 rounded-xl border border-emerald-500/20 text-emerald-400 shrink-0">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+        <div class="mb-10 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="mono-card rounded-2xl p-4">
+                <div class="mono-label mb-2">No server</div>
+                <div class="text-lg font-semibold">100% local generation</div>
             </div>
-            <div class="leading-relaxed">
-                <strong class="text-white font-semibold block mb-0.5">Garantierter lokaler Schutz:</strong>
-                Alle Schlüssel und Zertifikate werden lokal berechnet. Vor der Nutzung jedes Moduls kannst du unsere <a href="terms.html" class="text-emerald-400 underline hover:text-emerald-300">Nutzungsbedingungen</a> einsehen.
+            <div class="mono-card rounded-2xl p-4">
+                <div class="mono-label mb-2">No tracking</div>
+                <div class="text-lg font-semibold">Private by default</div>
+            </div>
+            <div class="mono-card rounded-2xl p-4">
+                <div class="mono-label mb-2">Minimal UI</div>
+                <div class="text-lg font-semibold">Dark mode ready</div>
             </div>
         </div>
 
-        <!-- Tool Cards Grid -->
+        <div class="mb-10 p-5 rounded-2xl border flex items-start space-x-4 text-sm">
+            <div class="icon-shell">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            </div>
+            <div class="leading-relaxed">
+                <strong class="block mb-1">Client-side by design.</strong>
+                Every key, certificate, secret, and hash is created locally. Before using a tool, you can review the <a href="terms.html" class="underline hover:opacity-80">terms</a>.
+            </div>
+        </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-            <!-- Card 1: S/MIME -->
-            <a href="smime.html" class="group bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between shadow-lg">
+            <a href="smime.html" class="tool-card group rounded-2xl p-6 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between mb-4">
-                        <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition duration-300 border border-slate-700">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        <div class="icon-shell">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l9 6 9-6"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2v-7"/></svg>
                         </div>
-                        <span class="text-[11px] font-mono text-slate-500 group-hover:text-emerald-400 transition">Modul 01</span>
+                        <span class="mono-label">Module 01</span>
                     </div>
-                    <h2 class="text-lg font-bold text-white group-hover:text-emerald-400 transition">S/MIME Zertifikate</h2>
-                    <p class="text-slate-400 text-xs mt-2 leading-relaxed">
-                        Erstelle Root-CA, S/MIME E-Mail Zertifikat & PKCS#12 Bundle (.p12) für Outlook, Thunderbird & Apple Mail.
+                    <h2 class="text-lg font-bold mb-2">S/MIME Certificates</h2>
+                    <p class="text-sm text-slate-300">
+                        Create a root CA, user certificate, and PKCS#12 bundle for secure email setups.
                     </p>
                 </div>
-                <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-semibold text-slate-300 group-hover:text-emerald-400">
-                    <span>Zertifikat erstellen</span>
-                    <svg class="w-4 h-4 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                <div class="mt-6 pt-4 border-t flex items-center justify-between text-xs font-semibold">
+                    <span>Generate cert</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7-7 7"/></svg>
                 </div>
             </a>
 
-            <!-- Card 2: SSH -->
-            <a href="ssh.html" class="group bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between shadow-lg">
+            <a href="ssh.html" class="tool-card group rounded-2xl p-6 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between mb-4">
-                        <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition duration-300 border border-slate-700">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        <div class="icon-shell">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14"/></svg>
                         </div>
-                        <span class="text-[11px] font-mono text-slate-500 group-hover:text-emerald-400 transition">Modul 02</span>
+                        <span class="mono-label">Module 02</span>
                     </div>
-                    <h2 class="text-lg font-bold text-white group-hover:text-emerald-400 transition">SSH Key Pairs</h2>
-                    <p class="text-slate-400 text-xs mt-2 leading-relaxed">
-                        Generiere OpenSSH-kompatible Schlüsselpaare (RSA 2048/4096 Bit) mit Kommentar für Server-Zugriffe.
+                    <h2 class="text-lg font-bold mb-2">SSH Key Pairs</h2>
+                    <p class="text-sm text-slate-300">
+                        Generate OpenSSH-compatible keys for secure server access and remote automation.
                     </p>
                 </div>
-                <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-semibold text-slate-300 group-hover:text-emerald-400">
-                    <span>SSH Key erzeugen</span>
-                    <svg class="w-4 h-4 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                <div class="mt-6 pt-4 border-t flex items-center justify-between text-xs font-semibold">
+                    <span>Generate SSH</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7-7 7"/></svg>
                 </div>
             </a>
 
-            <!-- Card 3: OpenPGP -->
-            <a href="pgp.html" class="group bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between shadow-lg">
+            <a href="pgp.html" class="tool-card group rounded-2xl p-6 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between mb-4">
-                        <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition duration-300 border border-slate-700">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        <div class="icon-shell">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2V9a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2zm6-10V7a3 3 0 016 0v2"/></svg>
                         </div>
-                        <span class="text-[11px] font-mono text-slate-500 group-hover:text-emerald-400 transition">Modul 03</span>
+                        <span class="mono-label">Module 03</span>
                     </div>
-                    <h2 class="text-lg font-bold text-white group-hover:text-emerald-400 transition">OpenPGP / GPG Keys</h2>
-                    <p class="text-slate-400 text-xs mt-2 leading-relaxed">
-                        Erstelle OpenPGP Schlüsselpaare (RSA & ECC Curve25519) inkl. Fingerabdruck für GnuPG & Mailvelope.
+                    <h2 class="text-lg font-bold mb-2">OpenPGP / GPG</h2>
+                    <p class="text-sm text-slate-300">
+                        Build RSA or ECC keys with public/private output and fingerprint metadata.
                     </p>
                 </div>
-                <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-semibold text-slate-300 group-hover:text-emerald-400">
-                    <span>PGP Key erzeugen</span>
-                    <svg class="w-4 h-4 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                <div class="mt-6 pt-4 border-t flex items-center justify-between text-xs font-semibold">
+                    <span>Generate PGP</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7-7 7"/></svg>
                 </div>
             </a>
 
-            <!-- Card 4: Passwörter & Secrets -->
-            <a href="secrets.html" class="group bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between shadow-lg">
+            <a href="secrets.html" class="tool-card group rounded-2xl p-6 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between mb-4">
-                        <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition duration-300 border border-slate-700">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 0121 9z"></path></svg>
+                        <div class="icon-shell">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 9V7a5 5 0 0110 0v2m-9 0h10a2 2 0 012 2v8a2 2 0 01-2 2H8a2 2 0 01-2-2v-8a2 2 0 012-2z"/></svg>
                         </div>
-                        <span class="text-[11px] font-mono text-slate-500 group-hover:text-emerald-400 transition">Modul 04</span>
+                        <span class="mono-label">Module 04</span>
                     </div>
-                    <h2 class="text-lg font-bold text-white group-hover:text-emerald-400 transition">Passwörter & Secrets</h2>
-                    <p class="text-slate-400 text-xs mt-2 leading-relaxed">
-                        Sichere Passwortgenerierung via Web Crypto API sowie UUID v4, 256-Bit Hex Tokens & Base64 Geheimnisse.
+                    <h2 class="text-lg font-bold mb-2">Passwords & Secrets</h2>
+                    <p class="text-sm text-slate-300">
+                        Random passwords, UUIDs, hex tokens, and base64 secrets with secure browser-side generation.
                     </p>
                 </div>
-                <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-semibold text-slate-300 group-hover:text-emerald-400">
-                    <span>Secrets generieren</span>
-                    <svg class="w-4 h-4 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                <div class="mt-6 pt-4 border-t flex items-center justify-between text-xs font-semibold">
+                    <span>Generate secrets</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7-7 7"/></svg>
                 </div>
             </a>
 
-            <!-- Card 5: Hashes & Encoding -->
-            <a href="hashes.html" class="group bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between shadow-lg">
+            <a href="hashes.html" class="tool-card group rounded-2xl p-6 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between mb-4">
-                        <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition duration-300 border border-slate-700">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"></path></svg>
+                        <div class="icon-shell">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M5 8h14M5 16h14"/></svg>
                         </div>
-                        <span class="text-[11px] font-mono text-slate-500 group-hover:text-emerald-400 transition">Modul 05</span>
+                        <span class="mono-label">Module 05</span>
                     </div>
-                    <h2 class="text-lg font-bold text-white group-hover:text-emerald-400 transition">Hashes & Encoding</h2>
-                    <p class="text-slate-400 text-xs mt-2 leading-relaxed">
-                        Berechne SHA-256, SHA-512, Base64 und Hex-Repräsentationen für beliebige Text-Eingaben in Echtzeit.
+                    <h2 class="text-lg font-bold mb-2">Hashes & Encoding</h2>
+                    <p class="text-sm text-slate-300">
+                        Hash strings with SHA-256, SHA-512, and compare Base64 or Hex representations instantly.
                     </p>
                 </div>
-                <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-semibold text-slate-300 group-hover:text-emerald-400">
-                    <span>Hashes berechnen</span>
-                    <svg class="w-4 h-4 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                <div class="mt-6 pt-4 border-t flex items-center justify-between text-xs font-semibold">
+                    <span>Calculate hashes</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7-7 7"/></svg>
                 </div>
             </a>
 
-            <!-- Card 6: Nutzungsbedingungen -->
-            <a href="terms.html" class="group bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between shadow-lg">
+            <a href="terms.html" class="tool-card group rounded-2xl p-6 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between mb-4">
-                        <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition duration-300 border border-slate-700">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        <div class="icon-shell">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6M7 21h10a2 2 0 002-2V7l-5-5H7a2 2 0 00-2 2v12a2 2 0 002 2z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 3v4h4"/></svg>
                         </div>
-                        <span class="text-[11px] font-mono text-slate-500 group-hover:text-emerald-400 transition">Rechtliches</span>
+                        <span class="mono-label">Legal</span>
                     </div>
-                    <h2 class="text-lg font-bold text-white group-hover:text-emerald-400 transition">Nutzungsbedingungen</h2>
-                    <p class="text-slate-400 text-xs mt-2 leading-relaxed">
-                        Transparente Informationen zu Datenschutz, lokaler Datenverarbeitung und Haftungsausschluss.
+                    <h2 class="text-lg font-bold mb-2">Terms</h2>
+                    <p class="text-sm text-slate-300">
+                        Clear guidance on local-only processing, data responsibility, and operational disclaimers.
                     </p>
                 </div>
-                <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-semibold text-slate-300 group-hover:text-emerald-400">
-                    <span>Bedingungen lesen</span>
-                    <svg class="w-4 h-4 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                <div class="mt-6 pt-4 border-t flex items-center justify-between text-xs font-semibold">
+                    <span>Read terms</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7-7 7"/></svg>
                 </div>
             </a>
-
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="border-t border-slate-800/80 bg-slate-900/40 py-6 text-center mt-auto">
-        <p class="text-xs text-slate-400 flex items-center justify-center space-x-1">
-            <span>© CryptoStudio – Minimalist Cryptography Suite.</span>
-            <a href="terms.html" class="text-slate-300 hover:text-emerald-400 ml-2 transition underline">
-                Nutzungsbedingungen
-            </a>
-        </p>
+    <footer class="border-t py-6 mt-auto">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 text-center text-xs text-slate-400 flex items-center justify-center gap-2 flex-wrap">
+            <span>© 2026 CryptoStudio</span>
+            <span>•</span>
+            <a href="https://github.com/arien-dev" target="_blank" rel="noopener" class="underline hover:opacity-80">Made by arien-dev</a>
+            <span>•</span>
+            <a href="terms.html" class="underline hover:opacity-80">Terms</a>
+        </div>
     </footer>
 
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        const applyTheme = (theme) => {
+            document.body.classList.toggle('theme-light', theme === 'light');
+            document.body.classList.toggle('theme-dark', theme === 'dark');
+            if (toggle) {
+                toggle.textContent = theme === 'dark' ? '☼' : '☾';
+            }
+            localStorage.setItem('cryptoTheme', theme);
+        };
+
+        const savedTheme = localStorage.getItem('cryptoTheme') || 'dark';
+        applyTheme(savedTheme);
+
+        if (toggle) {
+            toggle.addEventListener('click', () => {
+                const next = document.body.classList.contains('theme-light') ? 'dark' : 'light';
+                applyTheme(next);
+            });
+        }
+    </script>
 </body>
 </html>
